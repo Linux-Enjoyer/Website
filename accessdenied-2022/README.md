@@ -1,4 +1,65 @@
+## Crypto/sifers
+We are given the following :
+```
+0ujyfwa87u
+M25jMGQxbmc=
+GRXGI===
+2eac7797ba995850a0372814e2a7ba87 
+00110100 01101100 01101100
+64 162 63
+q4ss6e6ag
+65 62 32 35 64 38 62 37
+```
+The name of the challenge combined with the given text brings us to think that each line is a seperate encoding that we have to decode.
+### The first line
+`0ujyfwa87u`
+is a Caesar Cipher where digits are being shifted by 3 on their own alphabet and the letters are being shifted by 19 on their own alphabet. 
+```python
+ct="0ujyfwa87u"
+pt = ""
+for i in ct :
+    if i in "0123456789" :
+        pt+= chr ( (ord(i) - ord('0') + 3 ) % 10  +  ord('0'))
+    else :
+        pt+= chr ( (ord(i) - ord('a') + 19) % 26 + ord('a'))
+print(pt)
+```
+This gives us the first part of the flag `3ncrypt10n`
+
+### The second line 
+`M25jMGQxbmc=` is base64 encoding which can be decoded using [https://www.base64decode.org/](https://www.base64decode.org/) which gives us the second part of the flag `3nc0d1ng`
+### The third line 
+`GRXGI===` required a bit more effort.
+After more trial and error we realize that using [https://www.dcode.fr/base-32-encoding](https://www.dcode.fr/base-32-encoding) and decoding it  as a Base32 gives us the third part of the flag `4nd`
+
+### The fourth line
+`2eac7797ba995850a0372814e2a7ba87` is a MD5 hash which can be decoded using [https://md5decrypt.net/](https://md5decrypt.net/) and gives the fourth part of the flag `h4sh1ng`
+
+### The fifth line 
+`00110100 01101100 01101100` is just binary which can be decoded directly into ASCII which gives us the fifth part of the flag `4ll`
+
+### The sixth line
+`64 162 63` is just octal which can be decoded directly into ASCII which gives us the fifth part of the flag `4r3`
+### The seventh line
+`q4ss6e6ag` is simlar to the first line where digits are shifted to the left by 3 and letters are shifted to the right by 13
+``` python
+ct = "q4ss6e6ag"
+pt = ""
+for i in ct :
+    if i in "0123456789" :
+        pt+= chr ( (ord(i) - ord('0') - 3 ) % 10  +  ord('0'))
+    else :
+        pt+= chr ( (ord(i) - ord('a') + 13) % 26 + ord('a'))
+print(pt)
+```
+gives us the seventh part of the flag `d1ff3r3nt`
+### The eight line
+`65 62 32 35 64 38 62 37`
+is just hex which can be directly decoded to ASCII and give us the eight and final part of the flag `eb25d8b7`
+We are finally done!
+Assembling the parts gives us our flag : `accessdenied{3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7}`
 ## Crypto/RSA-2
+
 
 We are given the following:
 ```
