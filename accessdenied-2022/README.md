@@ -223,7 +223,7 @@ for some integer p.
 
 I realized that bruteforcing x and y suffices since we have the following constraint on N : `1 <= N <= 10^9`
 Our final solution will try to bruteforce all possible integers x and y that could possibly yeild a solution. This gives us the flag : `accessdenied{b0bs_f4v0r1t3_numb3r5_4r3_m1n3_f4v0urit3_t00_61c884c8}`
- ```
+ ```python
  from pwn import *
 r = remote("35.193.60.121",1337)
 def solution (a, b, n):   
