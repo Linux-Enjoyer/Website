@@ -72,6 +72,29 @@ We know that N = PQ
 
 Some basic knowledge of RSA is enough to realize we have to find d which is the inverse of e modulo Φ(N) = (P-1)(Q-1)
 
+Raising our ciphertext to the power of d mod N gives us a decimal number that is the plaintext of the flag.  We convert the decimal number to Hex and then decode into ASCII which gives us our flag : `accessdenied{RSA_1S_4M4Z1nG_R1GhT????_2a5286af}`
+```python
+p = 10428615258416108003372202871855627713663325599674460924186517713082197448534315449595394752587304354394402047262801959990727856908043138185588365886987557
+q = 8849030739304056868757301096931487921973840186794195322071503751716059434197468028088264340322992996182734000877348221433845302801843370163430108727308579
+e = 65537
+cipher_text = 84826403344972753121997388456739256614537789930909176473018827332005543366933391914385410712984001888365906754988120732970328825657318675360778107518188000885732104031648548997976916964730682864696944786364581243443475767387970255510475855029059715864139791778210784283726274424510221073880200865856769716576
+def egcd(a, b):
+    if a == 0:
+        return (b, 0, 1)
+    else:
+        g, y, x = egcd(b % a, a)
+        return (g, x - (b // a) * y, y)
+
+def modinv(a, m):
+    g, x, y = egcd(a, m)
+    if g != 1:
+        raise Exception('modular inverse does not exist')
+    else:
+        return x % m
+phi = (p-1) * (q-1)
+d = modinv(e,phi)
+print(pow(cipher_text,d,p*q))
+```
 ## Crypto/RSA-2
 
 
@@ -81,7 +104,8 @@ N = 2640577682875326109247341561610858461112713562281031554620768713723643070567
 e = 65537
 ct = 175347248748800717331910762241898102719683222504200516534883687111045877096093372005991552193144558951747833811929393668749668731738201985792026669764642235225240342271148171
 ```
-We immediately realize that N is way too small and we could probably factor it easily. Raising our ciphertext to the power of d mod N gives us a decimal number that is the plaintext of the flag. We convert the decimal number to Hex and then decode into ASCII which gives us our flag : `accessdenied{RSA_1S_4M4Z1nG_R1GhT????_2a5286af}`
+We immediately realize that N is way too small and we could probably factor it easily.
+
 
 My first choice was [factordb.com](http://factordb.com/) which gives us the following:
 
