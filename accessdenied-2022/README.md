@@ -53,9 +53,10 @@ for i in ct :
 print(pt)
 ```
 gives us the seventh part of the flag `d1ff3r3nt`
-### The eight line
+### The eighth line
 `65 62 32 35 64 38 62 37`
-is just hex which can be directly decoded to ASCII and give us the eight and final part of the flag `eb25d8b7`
+is just hex which can be directly decoded to ASCII and give us the eighth and final part of the flag `eb25d8b7`
+
 We are finally done!
 Assembling the parts gives us our flag : `accessdenied{3ncrypt10n_3nc0d1ng_4nd_h4sh1ng_4ll_4r3_d1ff3r3nt_eb25d8b7}`
 ## Crypto/RSA-2
