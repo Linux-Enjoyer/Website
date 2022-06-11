@@ -184,3 +184,67 @@ for i in range(len(flag)):
     plain += bytes([flag[i] ^ key[i % 8]])
 print(plain.decode())
 ```
+## Misc/Bobs Favourite Number
+
+we are given the following :
+```
+A number N is Bob's favourite number if N is equal to the sum of a certain number of 1856 and sum of a certain number of 2014.
+
+Task: Print whether a number is Bob's favourite number or not.
+Input: 
+First line contains a single integer number N.
+Output:
+Print “Yes” if Favourite if N is Bob’s favourite number, else print “No”.
+
+Constraints: 1 <= N <= 10^9
+
+Sample input:
+5726
+
+Sample output:
+Yes
+
+Sample explanation:
+5726 can be represented as the sum of 1856 + 1856 + 2014.
+```
+Mathematically we want to find integers x and y that satisfy $$1856x + 2014y = n$$ for a given input integer n
+
+
+My first instinct was to calculate gcd(1856,2014) and as long as gcd(1856,2014) divides n we have a solution. 
+
+Note that we don't actually have to find (x,y), we just have to output "Yes" if a solution exists so the existence of a solution suffices. The Trick is that we have another constraint on (x,y). We need both to be positive.
+
+
+While I'm sure that we can find a initial solution pair (x1,y1) using the Extended Euclidean algorithm and then check to see if generating a positive solution pair (x2,y2) is possible using the following $$ x2 = x1 - p ({ a \over gcd(a,b) }) $$  $$ y2 = y1 + p ({ a \over gcd(a,b) }) $$ for some integer p.
+
+I realized that bruteforcing x and y suffices since we have the following constraint on N : `1 <= N <= 10^9`
+Our final solution will try to bruteforce all possible integers x and y that could possibly yeild a solution. This gives us the flag : `accessdenied{b0bs_f4v0r1t3_numb3r5_4r3_m1n3_f4v0urit3_t00_61c884c8}`
+ ```
+ from pwn import *
+r = remote("35.193.60.121",1337)
+def solution (a, b, n):   
+    i = 0
+    while i * a <= n :
+        if (n - (i * a)) % b == 0:
+            return 1
+        i+=1
+    return 0
+
+while (True) :
+    a = r.recvline()
+    line = a.decode()
+    if ("accessdenied" in line) :
+        print(line)
+    
+    try :
+        num = int(line.split("\n")[0])
+        if (solution(1856,2014,num)) :
+            r.sendline("Yes".encode())
+        else :
+            r.sendline("No".encode())
+    except:
+        pass
+```       
+      
+     
+     
