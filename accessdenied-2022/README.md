@@ -207,7 +207,7 @@ Yes
 Sample explanation:
 5726 can be represented as the sum of 1856 + 1856 + 2014.
 ```
-Mathematically we want to find integers x and y that satisfy $$1856x + 2014y = n$$ for a given input integer n
+Mathematically we want to find integers x and y that satisfy `1856x + 2014y = n` for a given input integer n
 
 
 My first instinct was to calculate gcd(1856,2014) and as long as gcd(1856,2014) divides n we have a solution. 
@@ -215,7 +215,11 @@ My first instinct was to calculate gcd(1856,2014) and as long as gcd(1856,2014) 
 Note that we don't actually have to find (x,y), we just have to output "Yes" if a solution exists so the existence of a solution suffices. The Trick is that we have another constraint on (x,y). We need both to be positive.
 
 
-While I'm sure that we can find a initial solution pair (x1,y1) using the Extended Euclidean algorithm and then check to see if generating a positive solution pair (x2,y2) is possible using the following $$ x2 = x1 - p ({ a \over gcd(a,b) }) $$  $$ y2 = y1 + p ({ a \over gcd(a,b) }) $$ for some integer p.
+While I'm sure that we can find a initial solution pair (x1,y1) using the Extended Euclidean algorithm and then check to see if generating a positive solution pair (x2,y2) is possible using the following 
+
+![](eqn.PNG)
+
+for some integer p.
 
 I realized that bruteforcing x and y suffices since we have the following constraint on N : `1 <= N <= 10^9`
 Our final solution will try to bruteforce all possible integers x and y that could possibly yeild a solution. This gives us the flag : `accessdenied{b0bs_f4v0r1t3_numb3r5_4r3_m1n3_f4v0urit3_t00_61c884c8}`
