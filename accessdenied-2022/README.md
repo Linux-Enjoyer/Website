@@ -276,7 +276,7 @@ rgrrg
 Sample output
 87416 
 ```
-The Idea for the solution is to map each digit of N to a color (RGB) then construct the biggest possible number by iterating over the color configuration and choosing the biggest possible digit that is avaialble between all the digits that are mapped to the current color and then removing that digit from the corresponding list of digits of that color.
+The Idea for the solution is to map each digit of N to a color (RGB) then construct the biggest possible number by iterating over the color configuration and choosing the biggest possible digit that is available between all the digits that are mapped to the current color and then removing that digit from the corresponding list of digits of that color.
 ```python
 from pwn import *
 re= remote("35.193.60.121",5337)
