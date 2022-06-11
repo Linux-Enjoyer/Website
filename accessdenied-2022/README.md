@@ -39,7 +39,7 @@ After more trial and error we realize that using [https://www.dcode.fr/base-32-e
 `00110100 01101100 01101100` is just binary which can be decoded directly into ASCII which gives us the fifth part of the flag `4ll`
 
 ### The sixth line
-`64 162 63` is just octal which can be decoded directly into ASCII which gives us the fifth part of the flag `4r3`
+`64 162 63` is just octal which can be decoded directly into ASCII which gives us the sixth part of the flag `4r3`
 ### The seventh line
 `q4ss6e6ag` is simlar to the first line where digits are shifted to the left by 3 and letters are shifted to the right by 13
 ``` python
