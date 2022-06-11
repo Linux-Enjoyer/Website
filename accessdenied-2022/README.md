@@ -1,12 +1,12 @@
 ## Crypto/RSA-2
-### Description
+
 We are given the following:
 ```
 N = 264057768287532610924734156161085846111271356228103155462076871372364307056741048144764594645062879781647063846971890031256799636109911752078600428566502298518944558664381187
 e = 65537
 ct = 175347248748800717331910762241898102719683222504200516534883687111045877096093372005991552193144558951747833811929393668749668731738201985792026669764642235225240342271148171
 ```
-I immediately realized that N is way too small and we could probably factor it easily.
+We immediately realize that N is way too small and we could probably factor it easily.
 
 My first choice was [factordb.com](http://factordb.com/) which gives us the following:
 
@@ -41,4 +41,46 @@ def modinv(a, m):
 assert(p*q==n)
 d = modinv(e,phi)
 print(pow(ct,d,n))
+```
+## Crypto/Small key
+
+We are given the following:
+
+```python
+import os
+
+flag = b"XXXXXX"
+key = os.urandom(8)
+
+cipher_text = b""
+
+for i in range(len(flag)):
+    cipher_text += bytes([flag[i] ^ key[i % 8]])
+
+
+print(cipher_text.hex())
+
+
+# flag 763d32726973a23f79373473616ba86a60300e677634f734482a626f6e5ff22e636a327c2f5ff228240123242e6caa23483d6127765fff6d743a61212f38bb
+```
+We observe that the key used for the One-time pad is only 8 bytes. Since each byte is decoded into 1 UTF-8 character we know that our key is exactly 8 characters long.
+
+We also know the first 8 characters of the plaintext are going to be "accessde" since the flag format is accessdenied{}. With this knowledge can leak the entire key
+by XORing the first 8 characters of the flag (after converting it from Hex to a byte object) with b"accessde". Now we use the key to decrypt the flag which gives us our flag:
+accessdenied{kn0wn_pl41n_t3xt_4tt4ck5_4r3_r34lly_c00l_97cd0658}
+```python
+import binascii
+
+
+flag = binascii.unhexlify("763d32726973a23f79373473616ba86a60300e677634f734482a626f6e5ff22e636a327c2f5ff228240123242e6caa23483d6127765fff6d743a61212f38bb")
+starting_8_bytes_of_flag = binascii.unhexlify("763d32726973a23f")
+starting_8_bytes_of_plaintext= b"accessde"
+key = b""
+for i in range(len(starting_8_bytes_of_flag)):
+    key += bytes([starting_8_bytes_of_flag[i] ^ starting_8_bytes_of_plaintext[i % 8]]) 
+
+plain = b""
+for i in range(len(flag)):
+    plain += bytes([flag[i] ^ key[i % 8]])
+print(plain.decode())
 ```
