@@ -16,7 +16,7 @@ It doesn't give us the factorization but tells us that N is composite which we a
 My next choice was [https://www.alpertron.com.ar/ECM.HTM](https://www.alpertron.com.ar/ECM.HTM) which gives us:
 
 ![](intfac.PNG)
-We have found P and Q such that N = P x Q. Now we are pretty much done, we first calculate d which is the inverse of e modulo Φ(N) = (P-1)(Q-1). Now we raise our ciphertext to the power of d mod N which gives us a decimal number that is the plaintext of the flag. We convert the decimal number to Hex and then decode into ASCII which gives us our flag : accessdenied{alw4y5_try_t0_f4ct0r1z3_n_9ba93547}
+We have found P and Q such that N = P x Q. Now we are pretty much done, we first calculate d which is the inverse of e modulo Φ(N) = (P-1)(Q-1). Now we raise our ciphertext to the power of d mod N which gives us a decimal number that is the plaintext of the flag. We convert the decimal number to Hex and then decode into ASCII which gives us our flag : `accessdenied{alw4y5_try_t0_f4ct0r1z3_n_9ba93547}`
 ```python
 n   = 264057768287532610924734156161085846111271356228103155462076871372364307056741048144764594645062879781647063846971890031256799636109911752078600428566502298518944558664381187
 p   = 22788121468146346999
@@ -67,7 +67,7 @@ We observe that the key used for the One-time pad is only 8 bytes. Since each by
 
 We also know the first 8 characters of the plaintext are going to be "accessde" since the flag format is accessdenied{}. With this knowledge can leak the entire key
 by XORing the first 8 characters of the flag (after converting it from Hex to a byte object) with b"accessde". Now we use the key to decrypt the flag which gives us our flag:
-accessdenied{kn0wn_pl41n_t3xt_4tt4ck5_4r3_r34lly_c00l_97cd0658}
+`accessdenied{kn0wn_pl41n_t3xt_4tt4ck5_4r3_r34lly_c00l_97cd0658}`
 ```python
 import binascii
 
