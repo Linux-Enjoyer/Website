@@ -249,6 +249,82 @@ while (True) :
     except:
         pass
 ```       
-      
+## Misc/Green and Red flags      
+We are given the following :
+```
+Green and Red Flag
+
+Given a number N and each number is assigned either a green or red flag. We can apply the following operations any number of times: choose any two digits of number N with the same coloured flag assigned and swap them.
+
+Task: Print the maximum possible number, after applying any number of operations on number N.
+
+Input: 
+First line contains D the number of digits in the number N.
+Second line contains a string N which indicates the number N.
+Third line contains a string C which indicates the colour of the flag assigned to each digit.
+
+Output:
+Print the maximum possible number, after applying any number of operations on number N.
+
+Constraints: 1 <= D <= 10^6
+
+Sample input
+5
+16487
+rgrrg
+
+Sample output
+87416 
+```
+The Idea for the solution is to map each digit of N to a color (RGB) then construct the biggest possible number by iterating over the color configuration and choosing the biggest possible digit that is avaialble between all the digits that are mapped to the current color and then removing that digit from the corresponding list of digits of that color.
+```python
+from pwn import *
+re= remote("35.193.60.121",5337)
+digitsreceived = False
+while (True) :
+    a = re.recvline()
+    line = a.decode()
+    print(line)
+    if ("Answer" in line) : # time to answer!
+        r.sort()
+        g.sort()
+        b.sort()
+        ans = ""
+        for i in range (len(colors)) :
+            
+            if (colors[i] == "r") :
+                ans+= str(r[-1])
+                r.pop(-1)
+            if (colors[i] == "g") :
+                ans+= str(g[-1])
+                g.pop(-1)
+            if (colors[i] == "b") :
+                ans+= str(b[-1])
+                b.pop(-1)
+        re.sendline(ans.encode())
+        digitsreceived = False
+
+    elif (line[0] in "rgb") : # if the current line is the color configuration
+        colors = line
+        r = []
+        g = []
+        b= []
+        for i in range (len(line)) :
+            if (line[i] == "r") :
+                r.append(number[i])
+            elif (line[i]=="g") :
+                g.append(number[i])
+            else :
+                b.append(number[i])
+    else : # if the current line is an integer
+        if (digitsreceived==True) : # if the current line is the number of digits and not the actual number
+            number = line
+        else : # if the current line is the actual number
+            digitsreceived = True
+
+```
+
+
+Which gives us the flag : `accessdenied{gr33n_fl4gs_f0r_m3_4nd_r3d_fl4g5_4re_f0r_y0u_c8e0c8a3}`
      
      
