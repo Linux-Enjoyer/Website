@@ -33,7 +33,7 @@ This gives us the first part of the flag `3ncrypt10n`
 After more trial and error we realize that using [https://www.dcode.fr/base-32-encoding](https://www.dcode.fr/base-32-encoding) and decoding it  as a Base32 gives us the third part of the flag `4nd`
 
 ### The fourth line
-`2eac7797ba995850a0372814e2a7ba87` is a MD5 hash which can be decoded using [https://md5decrypt.net/](https://md5decrypt.net/) and gives the fourth part of the flag `h4sh1ng`
+`2eac7797ba995850a0372814e2a7ba87` is a MD5 hash which can be decoded (note that we are not actually decoding, MD5 is a one way hash where we can't go back from the hash to the original plaintext. All we are doing is searching for the hash value given in a database of hashes and their corresponding ciphertexts and hoping to get lucky!) using [https://md5decrypt.net/](https://md5decrypt.net/) and gives the fourth part of the flag `h4sh1ng`
 
 ### The fifth line 
 `00110100 01101100 01101100` is just binary which can be decoded directly into ASCII which gives us the fifth part of the flag `4ll`
