@@ -184,6 +184,16 @@ for i in range(len(flag)):
     plain += bytes([flag[i] ^ key[i % 8]])
 print(plain.decode())
 ```
+## Crypto/reused key 
+We are given two hex values `hex1 = 65f32f851cdb20eee875eea5a9a30f826cfd247eb550dcc89d1d4cdf952f5c28ca5f162355567fd262bb96` and                                     `hex2 =70f8259330c137d4e873ff9ea6a559ab2dea1a60d943859aa545578395301d28a0741d1e065a24d45cb19f`. We are told that one corresponds to the flag and the other is some random text and both the flag and the random text are encrypted using the same pad key.
+
+We know that hex  'hex1 = flag ^ key' and 'hex2 = text ^ key' 
+
+Since the xor function is a self inverse function we know that `hex1 ^ hex2 = flag^ text`.
+
+Now since we have `flag ^ text` we can xor commonly used english words at different indexes with it and whenever the result is readable (when converted to UTF-8 it gives us a string of acceptable characters), chances are we have found part of our flag (this technique is commonly referred to as crib dragging). The flag is `accessdenied{n3v3r_r3u53_th3_k3y5_db5e5bac} `
+
+
 ## Misc/Bobs Favourite Number
 
 we are given the following :
