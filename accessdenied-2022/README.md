@@ -327,9 +327,9 @@ while (True) :
             else :
                 b.append(number[i])
     else : # if the current line is an integer
-        if (digitsreceived==True) : # if the current line is the number of digits and not the actual number
+        if (digitsreceived==True) : #  if the current line is the actual number 
             number = line
-        else : # if the current line is the actual number
+        else : # if the current line is the number of digits and not the actual number
             digitsreceived = True
 
 ```
